@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>巧巧郎 App · 集運上架图 — 柳斌 · AIGC 设计师</title>
+<meta name="description" content="巧巧郎 App 集運业务的应用商店上架图：包裹導入、管理與軌跡。">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  /* 子页面 = 标题区 + 原比例大图流；点图在本页遮罩放大，不跳转文件 */
+  .work-head { padding-top: clamp(18px, 3vw, 44px); }
+
+  .work-back {
+    display: inline-block;
+    font-size: var(--fs-body-sm);
+    color: var(--muted);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .work-back:hover { color: var(--ink); }
+
+  .work-title {
+    margin-top: clamp(18px, 2.4vw, 30px);
+    max-width: 22ch;
+    font-size: clamp(30px, 3.8vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .work-lede { max-width: 60ch; margin-top: 16px; }
+
+  .work-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin-top: 18px;
+    font-size: var(--fs-label);
+    color: var(--muted);
+  }
+
+  .workimgs {
+    display: grid;
+    gap: clamp(24px, 2.4vw, 32px);
+    max-width: min(100%, 950px);
+    margin-inline: auto;
+  }
+
+  .workimg { margin: 0; }
+
+  .workimg__link {
+    display: block;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--panel-soft);
+    cursor: zoom-in;
+  }
+
+  .workimg img { display: block; width: 100%; height: auto; }
+
+  /* 放大层：纯 CSS :target，无跳转、无新动画方案 */
+  .zoom {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    display: none;
+    place-items: center;
+    padding: clamp(16px, 4vw, 56px);
+    background: rgba(8, 8, 8, 0.95);
+  }
+
+  .zoom:target { display: grid; }
+
+  .zoom img {
+    max-width: 100%;
+    max-height: calc(100vh - clamp(64px, 10vw, 128px));
+    object-fit: contain;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .zoom__backdrop { position: absolute; inset: 0; cursor: zoom-out; }
+
+  .zoom__close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    z-index: 2;
+    font-size: var(--fs-body-sm);
+    color: var(--panel-ink);
+    border-bottom: 1px solid currentColor;
+  }
+
+  body:has(.zoom:target) { overflow: hidden; }
+
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 28px;
+    margin-top: clamp(56px, 8vw, 120px);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .next__label {
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+
+  @media (max-width: 700px) { .work-title { max-width: none; } }
+</style>
+</head>
+<body>
+<div class="grid-lines" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <button class="menu-btn" type="button" aria-label="菜单" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" aria-label="主导航">
+      <a class="nav__item" href="index.html">
+        <span class="nav__num">01</span><span class="nav__label">首页</span>
+      </a>
+      <a class="nav__item" href="about.html">
+        <span class="nav__num">02</span><span class="nav__label">关于我</span>
+      </a>
+      <a class="nav__item is-active" href="works.html" aria-current="page">
+        <span class="nav__num">03</span><span class="nav__label">作品</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <section class="section section--flush">
+    <div class="shell work-head">
+      <a class="work-back" href="works.html">← 返回作品</a>
+      <h1 class="work-title reveal" style="--i:0">巧巧郎 App · 集運上架图</h1>
+      <p class="lede work-lede reveal" style="--i:1">巧巧郎（KKREN）跨境集運 App 的应用商店上架图：包裹導入、包裹管理與軌跡追蹤。</p>
+      <div class="work-meta reveal" style="--i:2">
+        <span>客户 巧巧郎 KKREN</span>
+        <span>业务 跨境集運</span>
+        <span>交付 上架图 5 张</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flush" style="margin-top: clamp(28px, 4vw, 52px)">
+    <div class="shell">
+      <div class="workimgs">
+        <figure class="workimg" id="img-01">
+          <a class="workimg__link" href="#zoom-01" aria-label="放大查看第 1 张">
+            <img src="assets/works/maijike-65/img-01.jpg" width="1242" height="2688" alt="巧巧郎 App · 集運上架图 · 第 1 张" loading="eager" decoding="async">
+          </a>
+        </figure>
+        <figure class="workimg" id="img-02">
+          <a class="workimg__link" href="#zoom-02" aria-label="放大查看第 2 张">
+            <img src="assets/works/maijike-65/img-02.jpg" width="1242" height="2688" alt="巧巧郎 App · 集運上架图 · 第 2 张" loading="lazy" decoding="async">
+          </a>
+        </figure>
+        <figure class="workimg" id="img-03">
+          <a class="workimg__link" href="#zoom-03" aria-label="放大查看第 3 张">
+            <img src="assets/works/maijike-65/img-03.jpg" width="1242" height="2688" alt="巧巧郎 App · 集運上架图 · 第 3 张" loading="lazy" decoding="async">
+          </a>
+        </figure>
+        <figure class="workimg" id="img-04">
+          <a class="workimg__link" href="#zoom-04" aria-label="放大查看第 4 张">
+            <img src="assets/works/maijike-65/img-04.jpg" width="1242" height="2688" alt="巧巧郎 App · 集運上架图 · 第 4 张" loading="lazy" decoding="async">
+          </a>
+        </figure>
+        <figure class="workimg" id="img-05">
+          <a class="workimg__link" href="#zoom-05" aria-label="放大查看第 5 张">
+            <img src="assets/works/maijike-store/img-03.jpg" width="1290" height="2796" alt="巧巧郎 App · 集運上架图 · 第 5 张" loading="lazy" decoding="async">
+          </a>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="next reveal">
+      <div>
+        <p class="next__label">Next project</p>
+        <p class="block-title">宝剑 · 商品详情页设计</p>
+      </div>
+      <a class="link-underline link-arrow" href="work-baojian-detail.html">下一个项目</a>
+    </div>
+  </div>
+</main>
+
+  <div class="zoom" id="zoom-01" role="dialog" aria-label="巧巧郎 App · 集運上架图 · 第 1 张">
+    <a class="zoom__backdrop" href="#img-01" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#img-01">关闭 ✕</a>
+    <img src="assets/works/maijike-65/img-01.jpg" alt="巧巧郎 App · 集運上架图 · 第 1 张" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-02" role="dialog" aria-label="巧巧郎 App · 集運上架图 · 第 2 张">
+    <a class="zoom__backdrop" href="#img-02" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#img-02">关闭 ✕</a>
+    <img src="assets/works/maijike-65/img-02.jpg" alt="巧巧郎 App · 集運上架图 · 第 2 张" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-03" role="dialog" aria-label="巧巧郎 App · 集運上架图 · 第 3 张">
+    <a class="zoom__backdrop" href="#img-03" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#img-03">关闭 ✕</a>
+    <img src="assets/works/maijike-65/img-03.jpg" alt="巧巧郎 App · 集運上架图 · 第 3 张" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-04" role="dialog" aria-label="巧巧郎 App · 集運上架图 · 第 4 张">
+    <a class="zoom__backdrop" href="#img-04" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#img-04">关闭 ✕</a>
+    <img src="assets/works/maijike-65/img-04.jpg" alt="巧巧郎 App · 集運上架图 · 第 4 张" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-05" role="dialog" aria-label="巧巧郎 App · 集運上架图 · 第 5 张">
+    <a class="zoom__backdrop" href="#img-05" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#img-05">关闭 ✕</a>
+    <img src="assets/works/maijike-store/img-03.jpg" alt="巧巧郎 App · 集運上架图 · 第 5 张" decoding="async">
+  </div>
+
+<script>
+  // Esc 关闭放大层（遮罩与「关闭」本身是普通锚点，无跳转文件）
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var h = location.hash;
+    if (h.indexOf('#zoom-') !== 0) return;
+    location.hash = '#' + h.slice(6).replace('zoom-', 'img-');
+  });
+</script>
+<script src="assets/js/motion.js" defer></script>
+
+<script>
+/* 长条图（高/宽 > 3）一律铺满 950；其余图片不超过自身原始宽度，避免小图被放大发虚 */
+(function () {
+  function tune(img) {
+    var nw = img.naturalWidth, nh = img.naturalHeight;
+    if (!nw || !nh) return;
+    var isStrip = (nh / nw) > 3;
+    if (isStrip) {
+      img.style.width = '';
+      img.style.maxWidth = '';
+      img.style.marginInline = '';
+    } else if (nw < 950) {
+      img.style.width = nw + 'px';
+      img.style.maxWidth = '100%';
+      img.style.marginInline = 'auto';
+    } else {
+      img.style.width = '';
+      img.style.maxWidth = '';
+      img.style.marginInline = '';
+    }
+  }
+  function tuneAll() { document.querySelectorAll('.workimg img').forEach(tune); }
+  document.querySelectorAll('.workimg img').forEach(function (img) { img.addEventListener('load', function () { tune(img); }); });
+  document.addEventListener('DOMContentLoaded', function () { tuneAll(); setTimeout(tuneAll, 300); });
+  window.addEventListener('load', function () { tuneAll(); setTimeout(tuneAll, 500); });
+  if (document.readyState === 'complete') tuneAll();
+})();
+</script>
+</body>
+</html>

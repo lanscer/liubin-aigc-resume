@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>柳斌 — 作品 · 项目</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="description" content="柳斌的作品：无限画布 infinite-canvas-LL 实机演示截图，以及跨境采购 App · 巧巧郎 UI、买即可 App、线下大型物料与展厅视觉。">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  /* v2 深红徽标底色（tokens.css 暂无该令牌，本页先定义，待 foundation 收口） */
+  :root { --badge-deep: var(--accent-deep); }
+
+  /* 个人开发项目徽标：深红底 + 白字（v2 §1.4） */
+  .works-badge {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 4px;
+    background: var(--badge-deep);
+    color: #FFFFFF;
+    font-size: var(--fs-label);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+
+  /* 页面级组件：其他项目紧凑文字行（base.css 无此形态，仅本页使用） */
+  .works-list__row {
+    display: grid;
+    grid-template-columns: 28px minmax(88px, 12%) 1fr auto;
+    column-gap: clamp(14px, 1.6vw, 24px);
+    align-items: center;
+    padding-block: clamp(14px, 1.6vw, 22px);
+    border-top: 1px solid var(--line);
+  }
+
+  .works-list__icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .works-list__row:last-child { border-bottom: 1px solid var(--line); }
+
+  .works-list__name {
+    font-size: var(--fs-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .works-list__tags {
+    font-size: var(--fs-label);
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* 16:8.57 的实机截图放进 16:10 容器时改为留白适配，不裁切画面 */
+  .card__media--fit img { object-fit: contain; }
+
+  @media (max-width: 1024px) {
+    .works-list__row { grid-template-columns: 28px minmax(96px, 20%) 1fr; row-gap: 6px; }
+    .works-list__tags { grid-column: 3; text-align: left; }
+  }
+
+  @media (max-width: 700px) {
+    .works-list__row { grid-template-columns: 28px 1fr; row-gap: 6px; }
+    .works-list__row > *:not(.works-list__icon) { grid-column: 2; }
+    .works-list__tags { text-align: left; }
+  }
+
+  /* v3：所有图框按原图比例，不设固定比例、不 cover 裁切 */
+  .card__media { aspect-ratio: auto !important; }
+  .card__media img { width: 100%; height: auto; object-fit: contain; }
+
+  /* 平面与商业项目：列式瀑布，卡片各自按比例高矮错落 */
+  .p-grid { columns: 3; column-gap: clamp(24px, 2.2vw, 32px); }
+
+  .p-card {
+    display: block;
+    break-inside: avoid;
+    margin-bottom: clamp(24px, 2.2vw, 32px);
+  }
+
+  .p-card img {
+    break-inside: avoid;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+    background: var(--panel-soft);
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .p-card:hover img { opacity: 0.9; }
+
+  .p-card__title {
+    margin-top: 12px;
+    font-size: var(--fs-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .p-card__desc {
+    margin-top: 4px;
+    font-size: var(--fs-label);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* 1:12 以上的超长条封面在瀑布里会撑成数千像素，单独限高 */
+  .p-card--strip img { max-height: 760px; object-fit: cover; object-position: top; }
+
+  @media (max-width: 1024px) { .p-grid { columns: 2; } }
+  @media (max-width: 700px) { .p-grid { columns: 1; } }
+</style>
+</head>
+<body>
+<div class="grid-lines" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <button class="menu-btn" type="button" aria-label="菜单" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" aria-label="主导航">
+      <a class="nav__item" href="index.html">
+        <span class="nav__num">01</span><span class="nav__label">首页</span>
+      </a>
+      <a class="nav__item" href="about.html">
+        <span class="nav__num">02</span><span class="nav__label">关于我</span>
+      </a>
+      <a class="nav__item is-active" href="works.html" aria-current="page">
+        <span class="nav__num">03</span><span class="nav__label">作品</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- 顶部 title 区：小标签 作品 / WORKS + 大标 + 一句导语 -->
+  <section class="section">
+    <div class="shell">
+      <div class="section__body">
+        <div class="section__rail reveal" style="--i:0">
+          <span class="eyebrow__cn">作品</span>
+          <span class="rail__en">WORKS</span>
+        </div>
+        <div>
+          <h1 class="section__title reveal" style="--i:1">从视觉表达，到实际落地。</h1>
+          <p class="lede reveal" style="--i:2; margin-top: 18px;">我用设计语言和技术工具说话。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主视觉 + 两张并排截图卡 -->
+  <section class="section section--flush">
+    <div class="shell">
+      <div class="card-grid">
+
+        <!-- 主视觉大卡：16:10 实机截图全宽完整显示 -->
+        <article class="card card--hero reveal" data-tilt style="--i:0">
+          <figure class="card__media">
+            <img src="assets/img/canvas-home.png" width="1600" height="1000"
+                 alt="无限画布应用首页实机截图：顶部导航、大标「無限画布」与提示词输入卡，右上角版本 v0.20.0"
+                 loading="eager" decoding="async">
+          </figure>
+          <div class="card__body">
+            <p class="works-badge">个人开发项目</p>
+            <h2 class="card__title">infinite-canvas-LL</h2>
+            <p class="card__desc" style="font-size: var(--fs-body); color: var(--panel-ink);">无限画布 · AI 视觉创作工作台</p>
+            <p class="card__desc" style="max-width: 62ch;">基于开源 basketikun/infinite-canvas 二次开发，围绕 AI 视觉创作，整合无限画布、图像编辑、本地 Agent 与 Photocraft 位图编辑器，贯通素材生成、图层处理与多层 PSD 交付的设计工作流。</p>
+            <p class="card__desc" style="max-width: 62ch;">独立负责画布交互、全栈开发、Agent 集成与跨平台交付。</p>
+            <div class="stats">
+              <span class="stat"><span class="stat__num">636</span><span class="stat__unit">commits</span></span>
+              <span class="stat"><span class="stat__num">22</span><span class="stat__unit">AI 编辑工具</span></span>
+              <span class="stat"><span class="stat__num">376</span><span class="stat__unit">单元测试</span></span>
+              <span class="stat"><span class="stat__num">5.5mo</span></span>
+              <span class="stat__label">2026.05–10</span>
+            </div>
+            <p class="card__meta">React19 · Vite7 · TypeScript · Zustand · Node.js · MCP · Codex · Rust/WASM · ComfyUI · LayerD</p>
+          </div>
+        </article>
+
+        <!-- 01 / 02 两张并排截图卡 -->
+        <div class="card-grid card-grid--2">
+          <article class="card reveal" data-tilt style="--i:0">
+            <figure class="card__media">
+              <img src="assets/img/canvas-workbench.png" width="1600" height="1000"
+                   alt="生图工作台实机截图：左侧生成记录，中间提示词、参考图、模型、质量、尺寸、分辨率与宽高比，右侧生成结果区"
+                   loading="lazy" decoding="async">
+            </figure>
+            <div class="card__body">
+              <p class="card__eyebrow">01</p>
+              <h3 class="card__title">生图工作台</h3>
+              <p class="card__desc">模型、尺寸、分辨率、宽高比与参考图在同一屏设定；右侧为生成结果区。</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-tilt style="--i:1">
+            <figure class="card__media">
+              <img src="assets/img/canvas-prompts.png" width="1600" height="1000"
+                   alt="提示词中心实机截图：左侧分类与标签，右侧提示词卡片瀑布，顶部写着当前共 1742 条提示词"
+                   loading="lazy" decoding="async">
+            </figure>
+            <div class="card__body">
+              <p class="card__eyebrow">02</p>
+              <h3 class="card__title">提示词中心</h3>
+              <p class="card__desc">当前共 1742 条提示词，按分类与标签检索，卡片可复制或加入我的资产。</p>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 产品实机：画布界面 / 技能库 / Agent 调用技能 -->
+  <section class="section">
+    <div class="shell">
+      <div class="section__body">
+        <div class="section__rail reveal" style="--i:0">
+          <span class="eyebrow__cn">产品实机</span>
+          <span class="rail__en">LIVE UI</span>
+        </div>
+        <div class="card-grid card-grid--3">
+          <article class="card reveal" data-tilt style="--i:0">
+            <figure class="card__media card__media--fit">
+              <img src="assets/img/app-canvas-agent.png" width="1600" height="857"
+                   alt="画布界面实机截图：画布上的参考图节点、顶部页面与缩放条、左侧工具栏、底部生成输入框，右侧 Agent 面板显示 6 个 MCP 服务已完成初始化"
+                   loading="lazy" decoding="async">
+            </figure>
+            <div class="card__body">
+              <p class="card__eyebrow">03</p>
+              <h3 class="card__title">画布界面</h3>
+              <p class="card__desc">参考图落到画布成为节点，右侧 Agent 面板已连本地 Codex，6 个 MCP 工具就绪。</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-tilt style="--i:1">
+            <figure class="card__media">
+              <img src="assets/img/app-skills.png" width="1600" height="1000"
+                   alt="技能库页面实机截图：搜索框、分类标签与技能卡列表，卡片带标题、简介与上游作者"
+                   loading="lazy" decoding="async">
+            </figure>
+            <div class="card__body">
+              <p class="card__eyebrow">04</p>
+              <h3 class="card__title">技能库</h3>
+              <p class="card__desc">技能库按分类浏览，「CRT复古界面像素插画」只是其中一个：上传照片即重绘成 1980s CRT 像素插画。</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-tilt style="--i:2">
+            <figure class="card__media card__media--fit">
+              <img src="assets/img/app-skill-invoked.png" width="1600" height="857"
+                   alt="Agent 输入框实机截图：输入框内已挂上技能 chip「/CRT复古界面像素插画」并写着指令，画布上的照片作为身份锚点"
+                   loading="lazy" decoding="async">
+            </figure>
+            <div class="card__body">
+              <p class="card__eyebrow">05</p>
+              <h3 class="card__title">Agent 调用技能</h3>
+              <p class="card__desc">在 Agent 输入框用 / 挂载技能，画布上的照片作为身份锚点一起交给 Agent。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 平面与商业项目：每个项目一个子页面 -->
+  <section class="section">
+    <div class="shell">
+      <div class="section__body">
+        <div class="section__rail reveal" style="--i:0">
+          <span class="eyebrow__cn">平面与商业项目</span>
+          <span class="rail__en">GRAPHIC &amp; COMMERCIAL</span>
+        </div>
+        <div class="p-grid" id="graphic-projects">
+        <a class="p-card" href="work-senfang-packaging.html">
+          <img src="assets/works/senfang-packaging/img-04.jpg" width="997" height="1600" alt="森方向 · 椰子水 / 桑葚汁包装" loading="lazy" decoding="async">
+          <h3 class="p-card__title">森方向 · 椰子水 / 桑葚汁包装</h3>
+          <p class="p-card__desc">椰子水与桑葚汁包装袋 · 正背版面 + 刀版尺寸 + 详情长图</p>
+        </a>
+
+        <a class="p-card" href="work-tingston-catalog.html">
+          <img src="assets/works/senfang-renders/img-01.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册" loading="lazy" decoding="async">
+          <h3 class="p-card__title">Tingston 2020 助听器产品册</h3>
+          <p class="p-card__desc">2020 hearing devices 产品目录 · 62 页</p>
+        </a>
+
+        <a class="p-card" href="work-hooll-packaging.html">
+          <img src="assets/works/senfang-renders/img-02.jpg" width="3840" height="2160" alt="Hooll 好缇 · 丝袜包装盒" loading="lazy" decoding="async">
+          <h3 class="p-card__title">Hooll 好缇 · 丝袜包装盒</h3>
+          <p class="p-card__desc">白盒 + 紫色带，三种陈列角度效果图</p>
+        </a>
+
+        <a class="p-card" href="work-repai-detergent.html">
+          <img src="assets/works/packaging-boards/img-01.jpg" width="2292" height="1434" alt="热派 37°C 洗衣凝珠礼盒" loading="lazy" decoding="async">
+          <h3 class="p-card__title">热派 37°C 洗衣凝珠礼盒</h3>
+          <p class="p-card__desc">三瓶装礼盒 · 展开尺寸图 + UV / 烫金 / 凸印分版</p>
+        </a>
+
+        <a class="p-card" href="work-taaroo-capsules.html">
+          <img src="assets/works/packaging-boards/img-06.jpg" width="1305" height="1248" alt="Taaroo 三合一洗衣凝珠包装" loading="lazy" decoding="async">
+          <h3 class="p-card__title">Taaroo 三合一洗衣凝珠包装</h3>
+          <p class="p-card__desc">3 in 1 洗衣凝珠立式袋 · 正面 / 背面 / 成品图</p>
+        </a>
+
+        <a class="p-card" href="work-vivtone-packaging.html">
+          <img src="assets/works/logo-branding/img-01.jpg" width="15966" height="10769" alt="Vivtone 助听器保护套包装" loading="lazy" decoding="async">
+          <h3 class="p-card__title">Vivtone 助听器保护套包装</h3>
+          <p class="p-card__desc">Hearing Aids Protector 包装展开图</p>
+        </a>
+
+        <a class="p-card" href="work-little-fat-boy.html">
+          <img src="assets/works/logo-branding/img-02.jpg" width="1363" height="1177" alt="小胖仔 LITTLE FAT BOY 品牌标识" loading="lazy" decoding="async">
+          <h3 class="p-card__title">小胖仔 LITTLE FAT BOY 品牌标识</h3>
+          <p class="p-card__desc">卡通头像 + 中英文字标 + 大·碼·服</p>
+        </a>
+
+        <a class="p-card" href="work-purfort-logo.html">
+          <img src="assets/works/logo-branding/img-03.jpg" width="7500" height="6501" alt="Purfort 品牌标识" loading="lazy" decoding="async">
+          <h3 class="p-card__title">Purfort 品牌标识</h3>
+          <p class="p-card__desc">标识两版：蓝底反白 / 白底正稿</p>
+        </a>
+
+        <a class="p-card" href="work-bluebear-logo.html">
+          <img src="assets/works/bluebear-logo/img-02.jpg" width="1400" height="600" alt="BlueBear · 品牌标识" loading="lazy" decoding="async">
+          <h3 class="p-card__title">BlueBear · 品牌标识</h3>
+          <p class="p-card__desc">熊头像标 + 横竖组合字标 + 使用展示</p>
+        </a>
+
+        <a class="p-card p-card--strip" href="work-brand-sheets.html">
+          <img src="assets/works/logo-branding/img-05.jpg" width="900" height="11156" alt="标识与物料汇总长图" loading="lazy" decoding="async">
+          <h3 class="p-card__title">标识与物料汇总长图</h3>
+          <p class="p-card__desc">多品牌标识、包装与物料版面合集（2 版）</p>
+        </a>
+
+        <a class="p-card" href="work-maijike-store.html">
+          <img src="assets/works/maijike-store/img-01.jpg" width="1290" height="2796" alt="买即可 App · 应用商店上架图" loading="lazy" decoding="async">
+          <h3 class="p-card__title">买即可 App · 应用商店上架图</h3>
+          <p class="p-card__desc">跨境採購 / 1688 代採購 / 雲倉 / 蝦皮代操 / AI 工具 · 9 张</p>
+        </a>
+
+        <a class="p-card" href="work-qiaoqiaolang-store.html">
+          <img src="assets/works/maijike-65/img-01.jpg" width="1242" height="2688" alt="巧巧郎 App · 集運上架图" loading="lazy" decoding="async">
+          <h3 class="p-card__title">巧巧郎 App · 集運上架图</h3>
+          <p class="p-card__desc">集運 · 包裹導入 / 管理 / 軌跡追蹤 · 5 张</p>
+        </a>
+
+        <a class="p-card p-card--strip" href="work-baojian-detail.html">
+          <img src="assets/works/baojian-detail/img-01.jpg" width="800" height="13018" alt="宝剑 · 商品详情页设计" loading="lazy" decoding="async">
+          <h3 class="p-card__title">宝剑 · 商品详情页设计</h3>
+          <p class="p-card__desc">墨眉剑 / 金龙雀 · 两条整页详情长图</p>
+        </a>
+
+        <a class="p-card" href="work-lightbox.html">
+          <img src="assets/works/lightbox/img-01.jpg" width="1536" height="1800" alt="户外灯箱与美食节视觉" loading="lazy" decoding="async">
+          <h3 class="p-card__title">户外灯箱与美食节视觉</h3>
+          <p class="p-card__desc">门楼展位 + 灯箱物料（台州美食节 / 多巴胺 / 大排档 / 冷饮）</p>
+        </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 其他项目：紧凑纯文字行 -->
+  <section class="section">
+    <div class="shell">
+      <div class="section__body">
+        <div class="section__rail reveal" style="--i:0">
+          <span class="eyebrow__cn">其他项目</span>
+          <span class="rail__en">OTHERS</span>
+        </div>
+        <div class="reveal" style="--i:1">
+          <div class="works-list__row">
+            <img class="works-list__icon" src="assets/img/work-qiaoqiaolang-icon.png" width="28" height="28"
+                 alt="巧巧郎 App 图标" loading="lazy" decoding="async">
+            <span class="meta">2019.12</span>
+            <span class="works-list__name">跨境采购 App · 巧巧郎 UI</span>
+            <span class="works-list__tags">电商 / App UI · 长期维护开发</span>
+          </div>
+          <div class="works-list__row">
+            <img class="works-list__icon" src="assets/img/work-maijike-icon.png" width="28" height="28"
+                 alt="买即可 App 图标" loading="lazy" decoding="async">
+            <span class="meta">2024 — 至今</span>
+            <span class="works-list__name">买即可 App</span>
+            <span class="works-list__tags">多端界面 · 首页设计 · 上架视觉</span>
+          </div>
+          <div class="works-list__row">
+            <span class="works-list__icon" aria-hidden="true"></span>
+            <span class="meta">2024.01–至今</span>
+            <span class="works-list__name">线下大型物料 · 展会 · 展厅视觉</span>
+            <span class="works-list__tags">龙泉远翔广告有限公司</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="section__body">
+      <div class="section__rail reveal" style="--i:0">
+        <span class="block-title">合作</span>
+      </div>
+      <div>
+        <h2 class="footer__title reveal" style="--i:1">开放 AIGC · 品牌与界面设计合作</h2>
+        <p class="footer__note reveal" style="--i:2">*欢迎品牌方、开发团队就品牌与界面设计、AIGC 工作流与 AI 工具开发展开合作洽谈。</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/motion.js" defer></script>
+</body>
+</html>

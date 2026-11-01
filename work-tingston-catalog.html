@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tingston 2020 助听器产品册 — 柳斌 · AIGC 设计师</title>
+<meta name="description" content="Tingston 听工厂 2020 hearing devices 产品目录设计，封面与 62 页内页。">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  /* 子页面 = 标题区 + 原比例大图流；点图在本页遮罩放大，不跳转文件 */
+  .work-head { padding-top: clamp(18px, 3vw, 44px); }
+
+  .work-back {
+    display: inline-block;
+    font-size: var(--fs-body-sm);
+    color: var(--muted);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .work-back:hover { color: var(--ink); }
+
+  .work-title {
+    margin-top: clamp(18px, 2.4vw, 30px);
+    max-width: 22ch;
+    font-size: clamp(30px, 3.8vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .work-lede { max-width: 60ch; margin-top: 16px; }
+
+  .work-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin-top: 18px;
+    font-size: var(--fs-label);
+    color: var(--muted);
+  }
+
+  .workimgs {
+    display: grid;
+    gap: clamp(24px, 2.4vw, 32px);
+    max-width: min(100%, 950px);
+    margin-inline: auto;
+  }
+
+  .workimg { margin: 0; }
+
+  .workimg__link {
+    display: block;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--panel-soft);
+    cursor: zoom-in;
+  }
+
+  .workimg img { display: block; width: 100%; height: auto; }
+
+  /* 放大层：纯 CSS :target，无跳转、无新动画方案 */
+  .zoom {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    display: none;
+    place-items: center;
+    padding: clamp(16px, 4vw, 56px);
+    background: rgba(8, 8, 8, 0.95);
+  }
+
+  .zoom:target { display: grid; }
+
+  .zoom img {
+    max-width: 100%;
+    max-height: calc(100vh - clamp(64px, 10vw, 128px));
+    object-fit: contain;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .zoom__backdrop { position: absolute; inset: 0; cursor: zoom-out; }
+
+  .zoom__close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    z-index: 2;
+    font-size: var(--fs-body-sm);
+    color: var(--panel-ink);
+    border-bottom: 1px solid currentColor;
+  }
+
+  body:has(.zoom:target) { overflow: hidden; }
+
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 28px;
+    margin-top: clamp(56px, 8vw, 120px);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .next__label {
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+
+  @media (max-width: 700px) { .work-title { max-width: none; } }
+
+  /* Tingston 产品册：页码索引 + 章节折叠 */
+  .pagenav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 8px;
+    margin: clamp(20px, 2.4vw, 30px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pagenav a {
+    display: grid;
+    place-items: center;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: var(--fs-label);
+    color: var(--muted);
+    transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+
+  .pagenav a:hover,
+  .pagenav a:focus-visible { color: var(--ink); border-color: var(--ink); }
+
+  .book { margin-top: clamp(28px, 4vw, 52px); }
+
+  .book details { border-top: 1px solid var(--line); padding-block: clamp(14px, 1.6vw, 20px); }
+
+  .book details:last-of-type { border-bottom: 1px solid var(--line); }
+
+  .book summary {
+    cursor: pointer;
+    font-size: var(--fs-body-sm);
+    font-weight: 600;
+    color: var(--ink);
+    list-style: none;
+  }
+
+  .book summary::-webkit-details-marker { display: none; }
+
+  .book summary::after { content: " ＋"; color: var(--muted-2); }
+
+  .book details[open] summary::after { content: " －"; }
+
+  .book details[open] summary { margin-bottom: clamp(18px, 2vw, 26px); }
+
+  .book__range { color: var(--muted); font-weight: 400; margin-left: 10px; }
+</style>
+</head>
+<body>
+<div class="grid-lines" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <button class="menu-btn" type="button" aria-label="菜单" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+
+<nav class="nav" aria-label="主导航">
+      <a class="nav__item" href="index.html">
+        <span class="nav__num">01</span><span class="nav__label">首页</span>
+      </a>
+      <a class="nav__item" href="about.html">
+        <span class="nav__num">02</span><span class="nav__label">关于我</span>
+      </a>
+      <a class="nav__item is-active" href="works.html" aria-current="page">
+        <span class="nav__num">03</span><span class="nav__label">作品</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <section class="section section--flush">
+    <div class="shell work-head">
+      <a class="work-back" href="works.html">← 返回作品</a>
+      <h1 class="work-title reveal" style="--i:0">Tingston 2020 助听器产品册</h1>
+      <p class="lede work-lede reveal" style="--i:1">Tingston 听工厂 2020 hearing devices 产品目录：橙色放射网点主视觉的封面，与整本 62 页内页。</p>
+      <div class="work-meta reveal" style="--i:2">
+        <span>客户 Tingston 听工厂</span>
+        <span>年份 2020</span>
+        <span>交付 产品目录封面 + 62 页内页</span>
+      </div>
+      <ol class="pagenav reveal" style="--i:3">
+          <li><a href="#p-01">01</a></li>
+          <li><a href="#p-02">02</a></li>
+          <li><a href="#p-03">03</a></li>
+          <li><a href="#p-04">04</a></li>
+          <li><a href="#p-05">05</a></li>
+          <li><a href="#p-06">06</a></li>
+          <li><a href="#p-07">07</a></li>
+          <li><a href="#p-08">08</a></li>
+          <li><a href="#p-09">09</a></li>
+          <li><a href="#p-10">10</a></li>
+          <li><a href="#p-11">11</a></li>
+          <li><a href="#p-12">12</a></li>
+          <li><a href="#p-13">13</a></li>
+          <li><a href="#p-14">14</a></li>
+          <li><a href="#p-15">15</a></li>
+          <li><a href="#p-16">16</a></li>
+          <li><a href="#p-17">17</a></li>
+          <li><a href="#p-18">18</a></li>
+          <li><a href="#p-19">19</a></li>
+          <li><a href="#p-20">20</a></li>
+          <li><a href="#p-21">21</a></li>
+          <li><a href="#p-22">22</a></li>
+          <li><a href="#p-23">23</a></li>
+          <li><a href="#p-24">24</a></li>
+          <li><a href="#p-25">25</a></li>
+          <li><a href="#p-26">26</a></li>
+          <li><a href="#p-27">27</a></li>
+          <li><a href="#p-28">28</a></li>
+          <li><a href="#p-29">29</a></li>
+          <li><a href="#p-30">30</a></li>
+          <li><a href="#p-31">31</a></li>
+          <li><a href="#p-32">32</a></li>
+          <li><a href="#p-33">33</a></li>
+          <li><a href="#p-34">34</a></li>
+          <li><a href="#p-35">35</a></li>
+          <li><a href="#p-36">36</a></li>
+          <li><a href="#p-37">37</a></li>
+          <li><a href="#p-38">38</a></li>
+          <li><a href="#p-39">39</a></li>
+          <li><a href="#p-40">40</a></li>
+          <li><a href="#p-41">41</a></li>
+          <li><a href="#p-42">42</a></li>
+          <li><a href="#p-43">43</a></li>
+          <li><a href="#p-44">44</a></li>
+          <li><a href="#p-45">45</a></li>
+          <li><a href="#p-46">46</a></li>
+          <li><a href="#p-47">47</a></li>
+          <li><a href="#p-48">48</a></li>
+          <li><a href="#p-49">49</a></li>
+          <li><a href="#p-50">50</a></li>
+          <li><a href="#p-51">51</a></li>
+          <li><a href="#p-52">52</a></li>
+          <li><a href="#p-53">53</a></li>
+          <li><a href="#p-54">54</a></li>
+          <li><a href="#p-55">55</a></li>
+          <li><a href="#p-56">56</a></li>
+          <li><a href="#p-57">57</a></li>
+          <li><a href="#p-58">58</a></li>
+          <li><a href="#p-59">59</a></li>
+          <li><a href="#p-60">60</a></li>
+          <li><a href="#p-61">61</a></li>
+          <li><a href="#p-62">62</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--flush">
+    <div class="shell">
+      <div class="book">
+      <details open>
+        <summary>内页 01–12<span class="book__range">12 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-01">
+              <a class="workimg__link" href="#zoom-01" aria-label="放大查看第 1 页">
+                <img src="assets/works/tingston-catalog/pdf-01.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 1 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-02">
+              <a class="workimg__link" href="#zoom-02" aria-label="放大查看第 2 页">
+                <img src="assets/works/tingston-catalog/pdf-02.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 2 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-03">
+              <a class="workimg__link" href="#zoom-03" aria-label="放大查看第 3 页">
+                <img src="assets/works/tingston-catalog/pdf-03.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 3 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-04">
+              <a class="workimg__link" href="#zoom-04" aria-label="放大查看第 4 页">
+                <img src="assets/works/tingston-catalog/pdf-04.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 4 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-05">
+              <a class="workimg__link" href="#zoom-05" aria-label="放大查看第 5 页">
+                <img src="assets/works/tingston-catalog/pdf-05.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 5 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-06">
+              <a class="workimg__link" href="#zoom-06" aria-label="放大查看第 6 页">
+                <img src="assets/works/tingston-catalog/pdf-06.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 6 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-07">
+              <a class="workimg__link" href="#zoom-07" aria-label="放大查看第 7 页">
+                <img src="assets/works/tingston-catalog/pdf-07.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 7 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-08">
+              <a class="workimg__link" href="#zoom-08" aria-label="放大查看第 8 页">
+                <img src="assets/works/tingston-catalog/pdf-08.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 8 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-09">
+              <a class="workimg__link" href="#zoom-09" aria-label="放大查看第 9 页">
+                <img src="assets/works/tingston-catalog/pdf-09.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 9 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-10">
+              <a class="workimg__link" href="#zoom-10" aria-label="放大查看第 10 页">
+                <img src="assets/works/tingston-catalog/pdf-10.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 10 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-11">
+              <a class="workimg__link" href="#zoom-11" aria-label="放大查看第 11 页">
+                <img src="assets/works/tingston-catalog/pdf-11.jpg" width="1787" height="2526" alt="Tingston 2020 助听器产品册 · 第 11 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-12">
+              <a class="workimg__link" href="#zoom-12" aria-label="放大查看第 12 页">
+                <img src="assets/works/tingston-catalog/pdf-12.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 12 页" loading="eager" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      <details>
+        <summary>内页 13–24<span class="book__range">12 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-13">
+              <a class="workimg__link" href="#zoom-13" aria-label="放大查看第 13 页">
+                <img src="assets/works/tingston-catalog/pdf-13.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 13 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-14">
+              <a class="workimg__link" href="#zoom-14" aria-label="放大查看第 14 页">
+                <img src="assets/works/tingston-catalog/pdf-14.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 14 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-15">
+              <a class="workimg__link" href="#zoom-15" aria-label="放大查看第 15 页">
+                <img src="assets/works/tingston-catalog/pdf-15.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 15 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-16">
+              <a class="workimg__link" href="#zoom-16" aria-label="放大查看第 16 页">
+                <img src="assets/works/tingston-catalog/pdf-16.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 16 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-17">
+              <a class="workimg__link" href="#zoom-17" aria-label="放大查看第 17 页">
+                <img src="assets/works/tingston-catalog/pdf-17.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 17 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-18">
+              <a class="workimg__link" href="#zoom-18" aria-label="放大查看第 18 页">
+                <img src="assets/works/tingston-catalog/pdf-18.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 18 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-19">
+              <a class="workimg__link" href="#zoom-19" aria-label="放大查看第 19 页">
+                <img src="assets/works/tingston-catalog/pdf-19.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 19 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-20">
+              <a class="workimg__link" href="#zoom-20" aria-label="放大查看第 20 页">
+                <img src="assets/works/tingston-catalog/pdf-20.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 20 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-21">
+              <a class="workimg__link" href="#zoom-21" aria-label="放大查看第 21 页">
+                <img src="assets/works/tingston-catalog/pdf-21.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 21 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-22">
+              <a class="workimg__link" href="#zoom-22" aria-label="放大查看第 22 页">
+                <img src="assets/works/tingston-catalog/pdf-22.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 22 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-23">
+              <a class="workimg__link" href="#zoom-23" aria-label="放大查看第 23 页">
+                <img src="assets/works/tingston-catalog/pdf-23.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 23 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-24">
+              <a class="workimg__link" href="#zoom-24" aria-label="放大查看第 24 页">
+                <img src="assets/works/tingston-catalog/pdf-24.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 24 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      <details>
+        <summary>内页 25–36<span class="book__range">12 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-25">
+              <a class="workimg__link" href="#zoom-25" aria-label="放大查看第 25 页">
+                <img src="assets/works/tingston-catalog/pdf-25.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 25 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-26">
+              <a class="workimg__link" href="#zoom-26" aria-label="放大查看第 26 页">
+                <img src="assets/works/tingston-catalog/pdf-26.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 26 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-27">
+              <a class="workimg__link" href="#zoom-27" aria-label="放大查看第 27 页">
+                <img src="assets/works/tingston-catalog/pdf-27.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 27 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-28">
+              <a class="workimg__link" href="#zoom-28" aria-label="放大查看第 28 页">
+                <img src="assets/works/tingston-catalog/pdf-28.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 28 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-29">
+              <a class="workimg__link" href="#zoom-29" aria-label="放大查看第 29 页">
+                <img src="assets/works/tingston-catalog/pdf-29.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 29 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-30">
+              <a class="workimg__link" href="#zoom-30" aria-label="放大查看第 30 页">
+                <img src="assets/works/tingston-catalog/pdf-30.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 30 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-31">
+              <a class="workimg__link" href="#zoom-31" aria-label="放大查看第 31 页">
+                <img src="assets/works/tingston-catalog/pdf-31.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 31 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-32">
+              <a class="workimg__link" href="#zoom-32" aria-label="放大查看第 32 页">
+                <img src="assets/works/tingston-catalog/pdf-32.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 32 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-33">
+              <a class="workimg__link" href="#zoom-33" aria-label="放大查看第 33 页">
+                <img src="assets/works/tingston-catalog/pdf-33.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 33 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-34">
+              <a class="workimg__link" href="#zoom-34" aria-label="放大查看第 34 页">
+                <img src="assets/works/tingston-catalog/pdf-34.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 34 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-35">
+              <a class="workimg__link" href="#zoom-35" aria-label="放大查看第 35 页">
+                <img src="assets/works/tingston-catalog/pdf-35.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 35 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-36">
+              <a class="workimg__link" href="#zoom-36" aria-label="放大查看第 36 页">
+                <img src="assets/works/tingston-catalog/pdf-36.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 36 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      <details>
+        <summary>内页 37–48<span class="book__range">12 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-37">
+              <a class="workimg__link" href="#zoom-37" aria-label="放大查看第 37 页">
+                <img src="assets/works/tingston-catalog/pdf-37.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 37 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-38">
+              <a class="workimg__link" href="#zoom-38" aria-label="放大查看第 38 页">
+                <img src="assets/works/tingston-catalog/pdf-38.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 38 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-39">
+              <a class="workimg__link" href="#zoom-39" aria-label="放大查看第 39 页">
+                <img src="assets/works/tingston-catalog/pdf-39.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 39 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-40">
+              <a class="workimg__link" href="#zoom-40" aria-label="放大查看第 40 页">
+                <img src="assets/works/tingston-catalog/pdf-40.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 40 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-41">
+              <a class="workimg__link" href="#zoom-41" aria-label="放大查看第 41 页">
+                <img src="assets/works/tingston-catalog/pdf-41.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 41 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-42">
+              <a class="workimg__link" href="#zoom-42" aria-label="放大查看第 42 页">
+                <img src="assets/works/tingston-catalog/pdf-42.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 42 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-43">
+              <a class="workimg__link" href="#zoom-43" aria-label="放大查看第 43 页">
+                <img src="assets/works/tingston-catalog/pdf-43.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 43 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-44">
+              <a class="workimg__link" href="#zoom-44" aria-label="放大查看第 44 页">
+                <img src="assets/works/tingston-catalog/pdf-44.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 44 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-45">
+              <a class="workimg__link" href="#zoom-45" aria-label="放大查看第 45 页">
+                <img src="assets/works/tingston-catalog/pdf-45.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 45 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-46">
+              <a class="workimg__link" href="#zoom-46" aria-label="放大查看第 46 页">
+                <img src="assets/works/tingston-catalog/pdf-46.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 46 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-47">
+              <a class="workimg__link" href="#zoom-47" aria-label="放大查看第 47 页">
+                <img src="assets/works/tingston-catalog/pdf-47.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 47 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-48">
+              <a class="workimg__link" href="#zoom-48" aria-label="放大查看第 48 页">
+                <img src="assets/works/tingston-catalog/pdf-48.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 48 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      <details>
+        <summary>内页 49–60<span class="book__range">12 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-49">
+              <a class="workimg__link" href="#zoom-49" aria-label="放大查看第 49 页">
+                <img src="assets/works/tingston-catalog/pdf-49.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 49 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-50">
+              <a class="workimg__link" href="#zoom-50" aria-label="放大查看第 50 页">
+                <img src="assets/works/tingston-catalog/pdf-50.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 50 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-51">
+              <a class="workimg__link" href="#zoom-51" aria-label="放大查看第 51 页">
+                <img src="assets/works/tingston-catalog/pdf-51.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 51 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-52">
+              <a class="workimg__link" href="#zoom-52" aria-label="放大查看第 52 页">
+                <img src="assets/works/tingston-catalog/pdf-52.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 52 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-53">
+              <a class="workimg__link" href="#zoom-53" aria-label="放大查看第 53 页">
+                <img src="assets/works/tingston-catalog/pdf-53.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 53 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-54">
+              <a class="workimg__link" href="#zoom-54" aria-label="放大查看第 54 页">
+                <img src="assets/works/tingston-catalog/pdf-54.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 54 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-55">
+              <a class="workimg__link" href="#zoom-55" aria-label="放大查看第 55 页">
+                <img src="assets/works/tingston-catalog/pdf-55.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 55 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-56">
+              <a class="workimg__link" href="#zoom-56" aria-label="放大查看第 56 页">
+                <img src="assets/works/tingston-catalog/pdf-56.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 56 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-57">
+              <a class="workimg__link" href="#zoom-57" aria-label="放大查看第 57 页">
+                <img src="assets/works/tingston-catalog/pdf-57.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 57 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-58">
+              <a class="workimg__link" href="#zoom-58" aria-label="放大查看第 58 页">
+                <img src="assets/works/tingston-catalog/pdf-58.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 58 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-59">
+              <a class="workimg__link" href="#zoom-59" aria-label="放大查看第 59 页">
+                <img src="assets/works/tingston-catalog/pdf-59.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 59 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-60">
+              <a class="workimg__link" href="#zoom-60" aria-label="放大查看第 60 页">
+                <img src="assets/works/tingston-catalog/pdf-60.jpg" width="1786" height="2527" alt="Tingston 2020 助听器产品册 · 第 60 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      <details>
+        <summary>内页 61–62<span class="book__range">2 页</span></summary>
+        <div class="workimgs">
+            <figure class="workimg" id="p-61">
+              <a class="workimg__link" href="#zoom-61" aria-label="放大查看第 61 页">
+                <img src="assets/works/tingston-catalog/pdf-61.jpg" width="1787" height="2527" alt="Tingston 2020 助听器产品册 · 第 61 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+            <figure class="workimg" id="p-62">
+              <a class="workimg__link" href="#zoom-62" aria-label="放大查看第 62 页">
+                <img src="assets/works/tingston-catalog/pdf-62.jpg" width="1786" height="2526" alt="Tingston 2020 助听器产品册 · 第 62 页" loading="lazy" decoding="async">
+              </a>
+            </figure>
+        </div>
+      </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="next reveal">
+      <div>
+        <p class="next__label">Next project</p>
+        <p class="block-title">Hooll 好缇 · 丝袜包装盒</p>
+      </div>
+      <a class="link-underline link-arrow" href="work-hooll-packaging.html">下一个项目</a>
+    </div>
+  </div>
+</main>
+
+  <div class="zoom" id="zoom-01" role="dialog" aria-label="Tingston 产品册 · 第 1 页">
+    <a class="zoom__backdrop" href="#p-01" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-01">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-01.jpg" alt="Tingston 产品册 · 第 1 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-02" role="dialog" aria-label="Tingston 产品册 · 第 2 页">
+    <a class="zoom__backdrop" href="#p-02" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-02">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-02.jpg" alt="Tingston 产品册 · 第 2 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-03" role="dialog" aria-label="Tingston 产品册 · 第 3 页">
+    <a class="zoom__backdrop" href="#p-03" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-03">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-03.jpg" alt="Tingston 产品册 · 第 3 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-04" role="dialog" aria-label="Tingston 产品册 · 第 4 页">
+    <a class="zoom__backdrop" href="#p-04" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-04">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-04.jpg" alt="Tingston 产品册 · 第 4 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-05" role="dialog" aria-label="Tingston 产品册 · 第 5 页">
+    <a class="zoom__backdrop" href="#p-05" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-05">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-05.jpg" alt="Tingston 产品册 · 第 5 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-06" role="dialog" aria-label="Tingston 产品册 · 第 6 页">
+    <a class="zoom__backdrop" href="#p-06" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-06">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-06.jpg" alt="Tingston 产品册 · 第 6 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-07" role="dialog" aria-label="Tingston 产品册 · 第 7 页">
+    <a class="zoom__backdrop" href="#p-07" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-07">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-07.jpg" alt="Tingston 产品册 · 第 7 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-08" role="dialog" aria-label="Tingston 产品册 · 第 8 页">
+    <a class="zoom__backdrop" href="#p-08" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-08">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-08.jpg" alt="Tingston 产品册 · 第 8 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-09" role="dialog" aria-label="Tingston 产品册 · 第 9 页">
+    <a class="zoom__backdrop" href="#p-09" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-09">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-09.jpg" alt="Tingston 产品册 · 第 9 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-10" role="dialog" aria-label="Tingston 产品册 · 第 10 页">
+    <a class="zoom__backdrop" href="#p-10" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-10">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-10.jpg" alt="Tingston 产品册 · 第 10 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-11" role="dialog" aria-label="Tingston 产品册 · 第 11 页">
+    <a class="zoom__backdrop" href="#p-11" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-11">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-11.jpg" alt="Tingston 产品册 · 第 11 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-12" role="dialog" aria-label="Tingston 产品册 · 第 12 页">
+    <a class="zoom__backdrop" href="#p-12" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-12">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-12.jpg" alt="Tingston 产品册 · 第 12 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-13" role="dialog" aria-label="Tingston 产品册 · 第 13 页">
+    <a class="zoom__backdrop" href="#p-13" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-13">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-13.jpg" alt="Tingston 产品册 · 第 13 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-14" role="dialog" aria-label="Tingston 产品册 · 第 14 页">
+    <a class="zoom__backdrop" href="#p-14" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-14">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-14.jpg" alt="Tingston 产品册 · 第 14 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-15" role="dialog" aria-label="Tingston 产品册 · 第 15 页">
+    <a class="zoom__backdrop" href="#p-15" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-15">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-15.jpg" alt="Tingston 产品册 · 第 15 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-16" role="dialog" aria-label="Tingston 产品册 · 第 16 页">
+    <a class="zoom__backdrop" href="#p-16" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-16">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-16.jpg" alt="Tingston 产品册 · 第 16 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-17" role="dialog" aria-label="Tingston 产品册 · 第 17 页">
+    <a class="zoom__backdrop" href="#p-17" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-17">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-17.jpg" alt="Tingston 产品册 · 第 17 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-18" role="dialog" aria-label="Tingston 产品册 · 第 18 页">
+    <a class="zoom__backdrop" href="#p-18" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-18">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-18.jpg" alt="Tingston 产品册 · 第 18 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-19" role="dialog" aria-label="Tingston 产品册 · 第 19 页">
+    <a class="zoom__backdrop" href="#p-19" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-19">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-19.jpg" alt="Tingston 产品册 · 第 19 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-20" role="dialog" aria-label="Tingston 产品册 · 第 20 页">
+    <a class="zoom__backdrop" href="#p-20" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-20">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-20.jpg" alt="Tingston 产品册 · 第 20 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-21" role="dialog" aria-label="Tingston 产品册 · 第 21 页">
+    <a class="zoom__backdrop" href="#p-21" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-21">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-21.jpg" alt="Tingston 产品册 · 第 21 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-22" role="dialog" aria-label="Tingston 产品册 · 第 22 页">
+    <a class="zoom__backdrop" href="#p-22" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-22">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-22.jpg" alt="Tingston 产品册 · 第 22 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-23" role="dialog" aria-label="Tingston 产品册 · 第 23 页">
+    <a class="zoom__backdrop" href="#p-23" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-23">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-23.jpg" alt="Tingston 产品册 · 第 23 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-24" role="dialog" aria-label="Tingston 产品册 · 第 24 页">
+    <a class="zoom__backdrop" href="#p-24" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-24">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-24.jpg" alt="Tingston 产品册 · 第 24 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-25" role="dialog" aria-label="Tingston 产品册 · 第 25 页">
+    <a class="zoom__backdrop" href="#p-25" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-25">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-25.jpg" alt="Tingston 产品册 · 第 25 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-26" role="dialog" aria-label="Tingston 产品册 · 第 26 页">
+    <a class="zoom__backdrop" href="#p-26" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-26">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-26.jpg" alt="Tingston 产品册 · 第 26 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-27" role="dialog" aria-label="Tingston 产品册 · 第 27 页">
+    <a class="zoom__backdrop" href="#p-27" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-27">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-27.jpg" alt="Tingston 产品册 · 第 27 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-28" role="dialog" aria-label="Tingston 产品册 · 第 28 页">
+    <a class="zoom__backdrop" href="#p-28" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-28">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-28.jpg" alt="Tingston 产品册 · 第 28 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-29" role="dialog" aria-label="Tingston 产品册 · 第 29 页">
+    <a class="zoom__backdrop" href="#p-29" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-29">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-29.jpg" alt="Tingston 产品册 · 第 29 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-30" role="dialog" aria-label="Tingston 产品册 · 第 30 页">
+    <a class="zoom__backdrop" href="#p-30" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-30">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-30.jpg" alt="Tingston 产品册 · 第 30 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-31" role="dialog" aria-label="Tingston 产品册 · 第 31 页">
+    <a class="zoom__backdrop" href="#p-31" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-31">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-31.jpg" alt="Tingston 产品册 · 第 31 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-32" role="dialog" aria-label="Tingston 产品册 · 第 32 页">
+    <a class="zoom__backdrop" href="#p-32" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-32">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-32.jpg" alt="Tingston 产品册 · 第 32 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-33" role="dialog" aria-label="Tingston 产品册 · 第 33 页">
+    <a class="zoom__backdrop" href="#p-33" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-33">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-33.jpg" alt="Tingston 产品册 · 第 33 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-34" role="dialog" aria-label="Tingston 产品册 · 第 34 页">
+    <a class="zoom__backdrop" href="#p-34" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-34">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-34.jpg" alt="Tingston 产品册 · 第 34 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-35" role="dialog" aria-label="Tingston 产品册 · 第 35 页">
+    <a class="zoom__backdrop" href="#p-35" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-35">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-35.jpg" alt="Tingston 产品册 · 第 35 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-36" role="dialog" aria-label="Tingston 产品册 · 第 36 页">
+    <a class="zoom__backdrop" href="#p-36" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-36">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-36.jpg" alt="Tingston 产品册 · 第 36 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-37" role="dialog" aria-label="Tingston 产品册 · 第 37 页">
+    <a class="zoom__backdrop" href="#p-37" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-37">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-37.jpg" alt="Tingston 产品册 · 第 37 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-38" role="dialog" aria-label="Tingston 产品册 · 第 38 页">
+    <a class="zoom__backdrop" href="#p-38" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-38">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-38.jpg" alt="Tingston 产品册 · 第 38 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-39" role="dialog" aria-label="Tingston 产品册 · 第 39 页">
+    <a class="zoom__backdrop" href="#p-39" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-39">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-39.jpg" alt="Tingston 产品册 · 第 39 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-40" role="dialog" aria-label="Tingston 产品册 · 第 40 页">
+    <a class="zoom__backdrop" href="#p-40" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-40">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-40.jpg" alt="Tingston 产品册 · 第 40 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-41" role="dialog" aria-label="Tingston 产品册 · 第 41 页">
+    <a class="zoom__backdrop" href="#p-41" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-41">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-41.jpg" alt="Tingston 产品册 · 第 41 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-42" role="dialog" aria-label="Tingston 产品册 · 第 42 页">
+    <a class="zoom__backdrop" href="#p-42" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-42">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-42.jpg" alt="Tingston 产品册 · 第 42 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-43" role="dialog" aria-label="Tingston 产品册 · 第 43 页">
+    <a class="zoom__backdrop" href="#p-43" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-43">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-43.jpg" alt="Tingston 产品册 · 第 43 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-44" role="dialog" aria-label="Tingston 产品册 · 第 44 页">
+    <a class="zoom__backdrop" href="#p-44" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-44">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-44.jpg" alt="Tingston 产品册 · 第 44 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-45" role="dialog" aria-label="Tingston 产品册 · 第 45 页">
+    <a class="zoom__backdrop" href="#p-45" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-45">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-45.jpg" alt="Tingston 产品册 · 第 45 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-46" role="dialog" aria-label="Tingston 产品册 · 第 46 页">
+    <a class="zoom__backdrop" href="#p-46" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-46">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-46.jpg" alt="Tingston 产品册 · 第 46 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-47" role="dialog" aria-label="Tingston 产品册 · 第 47 页">
+    <a class="zoom__backdrop" href="#p-47" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-47">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-47.jpg" alt="Tingston 产品册 · 第 47 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-48" role="dialog" aria-label="Tingston 产品册 · 第 48 页">
+    <a class="zoom__backdrop" href="#p-48" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-48">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-48.jpg" alt="Tingston 产品册 · 第 48 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-49" role="dialog" aria-label="Tingston 产品册 · 第 49 页">
+    <a class="zoom__backdrop" href="#p-49" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-49">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-49.jpg" alt="Tingston 产品册 · 第 49 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-50" role="dialog" aria-label="Tingston 产品册 · 第 50 页">
+    <a class="zoom__backdrop" href="#p-50" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-50">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-50.jpg" alt="Tingston 产品册 · 第 50 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-51" role="dialog" aria-label="Tingston 产品册 · 第 51 页">
+    <a class="zoom__backdrop" href="#p-51" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-51">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-51.jpg" alt="Tingston 产品册 · 第 51 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-52" role="dialog" aria-label="Tingston 产品册 · 第 52 页">
+    <a class="zoom__backdrop" href="#p-52" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-52">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-52.jpg" alt="Tingston 产品册 · 第 52 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-53" role="dialog" aria-label="Tingston 产品册 · 第 53 页">
+    <a class="zoom__backdrop" href="#p-53" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-53">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-53.jpg" alt="Tingston 产品册 · 第 53 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-54" role="dialog" aria-label="Tingston 产品册 · 第 54 页">
+    <a class="zoom__backdrop" href="#p-54" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-54">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-54.jpg" alt="Tingston 产品册 · 第 54 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-55" role="dialog" aria-label="Tingston 产品册 · 第 55 页">
+    <a class="zoom__backdrop" href="#p-55" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-55">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-55.jpg" alt="Tingston 产品册 · 第 55 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-56" role="dialog" aria-label="Tingston 产品册 · 第 56 页">
+    <a class="zoom__backdrop" href="#p-56" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-56">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-56.jpg" alt="Tingston 产品册 · 第 56 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-57" role="dialog" aria-label="Tingston 产品册 · 第 57 页">
+    <a class="zoom__backdrop" href="#p-57" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-57">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-57.jpg" alt="Tingston 产品册 · 第 57 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-58" role="dialog" aria-label="Tingston 产品册 · 第 58 页">
+    <a class="zoom__backdrop" href="#p-58" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-58">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-58.jpg" alt="Tingston 产品册 · 第 58 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-59" role="dialog" aria-label="Tingston 产品册 · 第 59 页">
+    <a class="zoom__backdrop" href="#p-59" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-59">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-59.jpg" alt="Tingston 产品册 · 第 59 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-60" role="dialog" aria-label="Tingston 产品册 · 第 60 页">
+    <a class="zoom__backdrop" href="#p-60" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-60">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-60.jpg" alt="Tingston 产品册 · 第 60 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-61" role="dialog" aria-label="Tingston 产品册 · 第 61 页">
+    <a class="zoom__backdrop" href="#p-61" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-61">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-61.jpg" alt="Tingston 产品册 · 第 61 页" decoding="async">
+  </div>
+  <div class="zoom" id="zoom-62" role="dialog" aria-label="Tingston 产品册 · 第 62 页">
+    <a class="zoom__backdrop" href="#p-62" aria-label="关闭放大"></a>
+    <a class="zoom__close" href="#p-62">关闭 ✕</a>
+    <img src="assets/works/tingston-catalog/pdf-62.jpg" alt="Tingston 产品册 · 第 62 页" decoding="async">
+  </div>
+
+<script>
+  // 页码锚点 -> 展开所属折叠区并定位
+  function openPage(hash) {
+    if (!/^#p-[0-9]{2}$/.test(hash)) return;
+    var el = document.querySelector(hash);
+    if (!el) return;
+    var box = el.closest('details');
+    if (box) box.open = true;
+    el.scrollIntoView({ block: 'start' });
+  }
+  window.addEventListener('hashchange', function () { openPage(location.hash); });
+  openPage(location.hash);
+</script>
+<script>
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var h = location.hash;
+    if (h.indexOf('#zoom-') !== 0) return;
+    location.hash = '#p-' + h.slice(6);
+  });
+</script>
+<script src="assets/js/motion.js" defer></script>
+
+<script>
+/* 长条图（高/宽 > 3）一律铺满 950；其余图片不超过自身原始宽度，避免小图被放大发虚 */
+(function () {
+  function tune(img) {
+    var nw = img.naturalWidth, nh = img.naturalHeight;
+    if (!nw || !nh) return;
+    var isStrip = (nh / nw) > 3;
+    if (isStrip) {
+      img.style.width = '';
+      img.style.maxWidth = '';
+      img.style.marginInline = '';
+    } else if (nw < 950) {
+      img.style.width = nw + 'px';
+      img.style.maxWidth = '100%';
+      img.style.marginInline = 'auto';
+    } else {
+      img.style.width = '';
+      img.style.maxWidth = '';
+      img.style.marginInline = '';
+    }
+  }
+  function tuneAll() { document.querySelectorAll('.workimg img').forEach(tune); }
+  document.querySelectorAll('.workimg img').forEach(function (img) { img.addEventListener('load', function () { tune(img); }); });
+  document.addEventListener('DOMContentLoaded', function () { tuneAll(); setTimeout(tuneAll, 300); });
+  window.addEventListener('load', function () { tuneAll(); setTimeout(tuneAll, 500); });
+  if (document.readyState === 'complete') tuneAll();
+})();
+</script>
+</body>
+</html>
